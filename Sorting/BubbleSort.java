@@ -6,6 +6,13 @@ public class BubbleSort{
         bubbleSortLeftToRight(nums);
         int [] arr ={64, 34, 25, 12, 22, 11, 90};
         bubbleSortRightToLeft(arr);
+        int [] sort ={64, 34, 25, 12, 22, 11, 90};
+        int n = sort.length;
+        bubbleSortRecursive(sort, n-1);
+        System.out.println("Printing bubble up recurively");
+        for(int i=0;i<sort.length;i++){
+            System.out.println(sort[i]);
+        }
     }
 
     static void bubbleSortLeftToRight(int nums[]){
@@ -41,4 +48,16 @@ public class BubbleSort{
             System.out.println(nums[i]);
         }
     }
+
+    static void bubbleSortRecursive(int []arr, int n){
+    if(n==0) return;
+    for(int i=0;i<n;i++){
+        if(arr[i]>arr[i+1]){
+            int temp = arr[i+1];
+            arr[i+1] = arr[i];
+            arr[i] = temp;
+        }
+    }
+    bubbleSortRecursive(arr,n-1);
+}
 }
