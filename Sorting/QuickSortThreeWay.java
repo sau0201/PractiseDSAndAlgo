@@ -24,6 +24,9 @@ class QuickSortThreeWay {
                 swap(arr, i, lt);
                 i++;lt++;
             }
+            while(i<=gt&&arr[gt]>pivot){
+                gt--;
+            }
             while(i<= gt&& arr[i]>pivot){
                 swap(arr,i,gt);
                 gt--;
