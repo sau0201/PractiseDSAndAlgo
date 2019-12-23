@@ -21,19 +21,17 @@ class DutchFlagProblem {
         int gt=hi;
         
         while(i<=gt){
-            while(i<=gt && nums[i]>pivot){
+            if(i<=gt && nums[i]>pivot){
                 swap(nums, i,lt);
                 i++;lt++;
+            }else if(i<=gt&&nums[i]<pivot){
+                swap(nums, i,gt);
+                gt--;
+            }else{
+                i++;
             }
             while(i<=gt&&nums[gt]<pivot){
                 gt--;
-            }
-            while(i<=gt&&nums[i]<pivot){
-                swap(nums, i,gt);
-                gt--;
-            }
-            while(i<=gt && nums[i]==pivot){
-                i++;
             }
         }
         
