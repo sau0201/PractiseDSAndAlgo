@@ -2,7 +2,7 @@ import java.util.*;
 class MergeKSortedArrays {
 
     public static void main(String[] args) {
-        int [][] arr = {{7,7,7,7},{2,6,6,8},{6,10,10, 11}};
+        int [][] arr = {{7,7,7,7},{8,6,6,2},{11,10,10, 6}};
         int length = arr.length;
         int breadth = arr[0].length;
         int [] mArray = new int [length*breadth];
@@ -10,14 +10,21 @@ class MergeKSortedArrays {
         for (int i = 0; i < mArray.length; i++)
                 System.out.println(mArray[i]);
     }
-
+    /*
+     * Complete the mergeArrays function below.
+     */
     static int[] mergeArrays(int[][] arr) {
         int length = arr.length;
         int breadth = arr[0].length;
         int [] mArray = new int [length*breadth];
-        if(length==0) return mArray;
-        if(length==1) return arr[0];
-        
+        int l=0;
+        for(int i=0;i<breadth;i++){
+            mArray[i] = arr[0][i];
+            l++;
+        }
+        l--;
+
+        //if sorting order is not known. Make this order ==1 if increasing or -1 if decreasing 
         int order = 0;
         for(int k=0;k<length && order==0;k++){
             int j=0;
@@ -27,49 +34,28 @@ class MergeKSortedArrays {
                 j++;
             }
         }
-        
-        PriorityQueue<ArrayEntry> queue = new PriorityQueue<ArrayEntry>(length, new Comparator<ArrayEntry>(){
-            public int compare(ArrayEntry a1, ArrayEntry a2){
-                return a1.order*Integer.compare(a1.value, a2.value);
+        for(int i=1;i<length;i++){
+            int b=breadth-1;
+            int a =l; int n=a+breadth;
+            while(b>=0 && a>=0){
+                if(order*mArray[a]>=order*arr[i][b]){
+                    mArray[n] = mArray[a];
+                    a--;n--;
+                }else{
+                    mArray[n]= arr[i][b];
+                    b--;n--;
+                }
             }
-        });
-        
-        for(int i=0;i<length;i++){
-            if(arr[i].length>0){
-                ArrayEntry ae = new ArrayEntry(i,arr[i][0],0, order);
-                queue.add(ae);
+            while(a>=0){
+                mArray[n] = mArray[a];
+                a--;n--;
             }
+            while(b>=0){
+                mArray[n]= arr[i][b];
+                b--;n--;
+            }
+            l = l+breadth;
         }
-
-        int index=0;
-        while(!queue.isEmpty()){
-            ArrayEntry ae = queue.poll();
-            mArray[index++]=ae.value;
-    
-            int arrayIndex = ae.arrayIndex;
-            int valueIndex = ae.valueIndex;
-            if(valueIndex+1<arr[arrayIndex].length){
-                ArrayEntry ae2 = new ArrayEntry(arrayIndex, arr[arrayIndex][valueIndex+1], valueIndex+1,order);
-                queue.add(ae2);
-            }
-            
-        }
-        
         return mArray;
     }
-    
-    static class ArrayEntry{
-        int value;
-        int arrayIndex;
-        int valueIndex;
-        int order;
-        
-        ArrayEntry(int arrayIndex,int value, int valueIndex, int order){
-            this.arrayIndex = arrayIndex;
-            this.value=value;
-            this.valueIndex=valueIndex;
-            this.order=order;
-        }
-    }
 }
-
