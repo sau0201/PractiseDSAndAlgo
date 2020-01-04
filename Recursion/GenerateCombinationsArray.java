@@ -1,7 +1,7 @@
 import java.util.*;
 import java.util.stream.*;
 
-public class GeneratePermutationsArray{
+public class GenerateCombinationsArray{
     public static void main(String [] args){
         int[] ints = {1,2,3};
         List<Integer> list = Arrays.stream(ints).boxed().collect(Collectors.toList());

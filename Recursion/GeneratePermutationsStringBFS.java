@@ -9,15 +9,15 @@ public class GeneratePermutationsStringBFS {
     }
 
     static List<String> permutations(String str, int length) {
-        if (length == 1) {
-            return Arrays.asList(str);
+        List<String> result = new ArrayList<String>();
+        for(int i=0;i<result.size();i++){
+            String c = result.get(i);
+            result.add(c+"");
         }
-        List<String> result = new ArrayList();
-        for (int i = 0; i < str.length(); i++) {
-            List<String> prevResult = permutations(str.substring(0, i) + str.substring(i + 1), length - 1);
-            for (String s : prevResult) {
-                result.add(str.charAt(i) + "" + s);
-            }
+        if(length==1) return result;
+        for(int i=2;i<=length;i++){
+            //List<String> nextResult = new ArrayList<String>();
+            
         }
         return result;
     }
