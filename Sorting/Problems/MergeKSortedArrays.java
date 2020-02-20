@@ -2,7 +2,7 @@ import java.util.*;
 class MergeKSortedArrays {
 
     public static void main(String[] args) {
-        int [][] arr = {{7,7,7,7},{8,6,6,2},{11,10,10, 6}};
+        int [][] arr = {{1,2,3,4},{5,6,6,7},{8,10,10, 11}};
         int length = arr.length;
         int breadth = arr[0].length;
         int [] mArray = new int [length*breadth];
@@ -17,12 +17,9 @@ class MergeKSortedArrays {
         int length = arr.length;
         int breadth = arr[0].length;
         int [] mArray = new int [length*breadth];
-        int l=0;
         for(int i=0;i<breadth;i++){
             mArray[i] = arr[0][i];
-            l++;
         }
-        l--;
 
         //if sorting order is not known. Make this order ==1 if increasing or -1 if decreasing 
         int order = 0;
@@ -36,7 +33,7 @@ class MergeKSortedArrays {
         }
         for(int i=1;i<length;i++){
             int b=breadth-1;
-            int a =l; int n=a+breadth;
+            int a = i*breadth-1 ; int n=a+breadth;
             while(b>=0 && a>=0){
                 if(order*mArray[a]>=order*arr[i][b]){
                     mArray[n] = mArray[a];
@@ -54,7 +51,6 @@ class MergeKSortedArrays {
                 mArray[n]= arr[i][b];
                 b--;n--;
             }
-            l = l+breadth;
         }
         return mArray;
     }
