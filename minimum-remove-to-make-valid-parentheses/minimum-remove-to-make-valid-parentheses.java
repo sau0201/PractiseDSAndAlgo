@@ -4,11 +4,9 @@ class Solution {
         Stack<Integer> stack = new Stack();
         for(int i=0;i<sb.length();i++){
             char c = sb.charAt(i);
-            if(Character.isAlphabetic(c)){
-                continue;
-            }else if(c=='('){
+            if(c=='('){
                 stack.add(i);
-            }else {
+            }else if(c==')'){
                 if(stack.isEmpty()){
                     sb.deleteCharAt(i);
                     i--;
@@ -22,8 +20,6 @@ class Solution {
             int index = stack.pop();
             sb.deleteCharAt(index);
         }
-        
         return sb.toString();
-        
     }
 }
