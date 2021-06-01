@@ -37,15 +37,16 @@ class Solution {
                 continue;
             }else{
                 String str = b.substring(i, j+1);
-                String str2 = a.substring(i, j+1);
-                if(isPalindrome(str) || isPalindrome(str2)){
+                if(isPalindrome(str)){
                     return true;
-                }else{
-                    return false;
                 }
+                String str2 = a.substring(i, j+1);
+                if(isPalindrome(str2)){
+                    return true;
+                }
+                return false;
             }
         }
-        
         return true;
     }
 }
