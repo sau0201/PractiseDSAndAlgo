@@ -4,19 +4,19 @@ class PhoneDirectory {
         @param maxNumbers - The maximum numbers that can be stored in the phone directory. */
     int maxNum = 0;
     int currNum = 0;
-    Map<Integer, Integer> map;
+    Set<Integer> set;
     public PhoneDirectory(int maxNumbers) {
         maxNum = maxNumbers;
-        map = new HashMap<>();
+        set = new HashSet<>();
     }
     
     /** Provide a number which is not assigned to anyone.
         @return - Return an available number. Return -1 if none is available. */
     public int get() {
         if(currNum==maxNum){
-            if(map.size()>0){
-                int key = map.keySet().iterator().next();
-                map.remove(key);
+            if(set.size()>0){
+                int key = set.iterator().next();
+                set.remove(key);
                 return key;
             }else return -1;
         }else{
@@ -27,13 +27,13 @@ class PhoneDirectory {
     /** Check if a number is available or not. */
     public boolean check(int number) {
         if(number>=maxNum) return false;
-        return number>=currNum || map.containsKey(number);
+        return number>=currNum || set.contains(number);
     }
     
     /** Recycle or release a number. */
     public void release(int number) {
         if(!check(number)){
-            map.put(number, 1);
+            set.add(number);
         }
     }
 }
