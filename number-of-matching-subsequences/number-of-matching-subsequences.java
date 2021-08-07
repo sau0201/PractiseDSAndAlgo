@@ -1,46 +1,54 @@
 class Solution {
-    class TrieNode {
-        char c;
-        int end;
-        TrieNode[] children;
-        public TrieNode(char c) {
-            this.c = c;
-            this.end = 0;
-            this.children = new TrieNode[26];
+    public int numMatchingSubseq(String s, String[] words) {
+        Trie root = new Trie();
+        for(String word:words){
+            root.insertWord(word);
         }
-    }
-    public int numMatchingSubseq(String S, String[] words) {
-        if (words == null || words.length == 0) return 0;
-        TrieNode root = createTrie(words);
-        return dfs(S, root, 0);
+        
+        return root.dfs(s);
+        
     }
     
-    private TrieNode createTrie(String[] words) {
-        TrieNode root = new TrieNode('*');
-        for (String word : words) {
-            addWord(root, word);
+    class Trie{
+        TrieNode root;
+        int count;
+        
+        Trie(){
+            root = new TrieNode();
         }
-        return root;
-    }
-    
-    private void addWord(TrieNode root, String word) {
-        for (char c : word.toCharArray()) {
-            if (root.children[c - 'a'] == null) {
-                root.children[c - 'a'] = new TrieNode(c);
+        
+        void insertWord(String word){
+            TrieNode current = root;
+            for(char c:word.toCharArray()){
+                current = current.children.computeIfAbsent(c, k->new TrieNode());
             }
-            root = root.children[c - 'a'];
+            ++current.isEndOfWord;
         }
-        root.end++;
+        
+        int dfs(String word){
+            dfs(word, root, 0);
+            return count;
+        }
+        
+        void dfs(String word, TrieNode root, int index){
+            for(char c:root.children.keySet()){
+                int newIndex = word.indexOf(c, index);
+                if(newIndex!=-1){
+                    TrieNode current = root.children.get(c);
+                    if(current.isEndOfWord>0) count +=current.isEndOfWord;
+                    dfs(word, current, newIndex+1);
+                }
+            }
+            
+        }
     }
     
-    private int dfs(String S, TrieNode root, int pos) {
-        if (root == null) return 0;
-        int index = S.indexOf(root.c, pos);
-        if (root.c != '*' && index == -1) return 0;
-        int res = root.end;
-        for (int i = 0; i < 26; i++) {
-            res += dfs(S, root.children[i], root.c == '*' ? 0 : index + 1);
+    class TrieNode {
+        Map<Character, TrieNode> children;
+        int isEndOfWord;
+        
+        TrieNode(){
+            children = new HashMap();
         }
-        return res;
     }
 }
